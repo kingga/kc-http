@@ -3,10 +3,10 @@
     "version": "1.0.0",
     "description": "An HTTP strategy which allows you to switch between multiple HTTP libraries such as Axios, Fetch, etc. without changing any code.",
     "main": "dist/index.js",
+    "types": "dist/src/http.d.ts",
     "repository": "https://github.com/kingga/kc-http",
     "author": "Isaac Skelton <contact@isaacskelton.com>",
     "license": "MIT",
-    "types": "dist/index.d.ts",
     "keywords": [
         "HTTP",
         "Kings Collection",

@@ -1,1 +1,0 @@
-{"version":3,"file":"IRequest.d.ts","sourceRoot":"","sources":["../../src/contracts/IRequest.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,aAAa,EAAE,MAAM,UAAU,CAAC;AAEzC,MAAM,WAAW,QAAQ;IACrB,GAAG,EAAE,MAAM,CAAC;IACZ,MAAM,CAAC,EAAE,aAAa,CAAC;IACvB,IAAI,CAAC,EAAE,GAAG,CAAC;IACX,OAAO,CAAC,EAAE,MAAM,CAAC,MAAM,EAAE,MAAM,CAAC,CAAC;CACpC"}
