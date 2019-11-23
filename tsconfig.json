@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        /* Basic Options */
+        "target": "es2015",
+        "module": "commonjs",
+        "declaration": true,                   /* Generates corresponding '.d.ts' file. */
+        "declarationMap": true,                /* Generates a sourcemap for each corresponding '.d.ts' file. */
+        "sourceMap": true,
+        "removeComments": true,
+        "outDir": "./dist/",
+
+        /* Strict Type-Checking Options */
+        "strict": true,
+        "noImplicitAny": true,
+
+        /* Source Map Options */
+        "inlineSourceMap": false               /* Emit a single file with source maps instead of having a separate file. */
+    }
+}
