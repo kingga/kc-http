@@ -15,16 +15,16 @@ npm i @kingga/kc-http
 
 ```typescript
 import Container from '@kingga/kc-container'; // Not needed, requires yarn add @kingga/kc-container.
-import { FetchWrapper, IHttp } from '@kingga/kc-http';
+import { FetchHttp, IHttp } from '@kingga/kc-http';
 
 const container = new Container();
 
-container.bind<IHttp>(IHttp, () => new FetchWrapper());
+container.bind<IHttp>('IHttp', () => new FetchHttp());
 
 // Anywhere else in your application.
 import { IHttp, IResponse, IErrorResponse } from '@kingga/kc-http';
 
-const http = container.make<IHttp>(IHttp);
+const http = container.make<IHttp>('IHttp');
 http.get({ url: '/user' })
     .then((response: IResponse) => {
         console.log(response.data);
