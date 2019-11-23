@@ -41,7 +41,8 @@
         "dev": "webpack --mode development",
         "watch": "webpack --mode development --watch",
         "production": "webpack --mode production",
-        "server": "tsc tests/server/index.ts --outDir tests/server/dist && node tests/server/dist/index.js"
+        "server": "tsc tests/server/index.ts --outDir tests/server/dist && node tests/server/dist/index.js",
+        "prepublish": "yarn test && yarn production"
     },
     "nyc": {
         "extension": [
