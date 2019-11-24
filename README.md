@@ -1,6 +1,8 @@
 # KC HTTP
 *A wrapper around common HTTP libs*
 
+[![Build Status](https://travis-ci.com/kingga/kc-http.svg?branch=master)](https://travis-ci.com/kingga/kc-http)
+
 Change HTTP library without any hassle, switching between different HTTP libs could be as easy as changing one line.
 
 ## Installation
