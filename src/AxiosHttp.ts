@@ -26,6 +26,10 @@ export default class AxiosHttp implements IHttp {
                 headers: request.headers || {},
             };
 
+            if (request.cancelToken) {
+                config.cancelToken = new Axios.CancelToken(request.cancelToken);
+            }
+
             this.axios.request(config)
                 .then((response) => {
                     runResponseMiddleware(

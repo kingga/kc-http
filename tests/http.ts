@@ -3,7 +3,8 @@ import { FetchHttp, AxiosHttp } from '../src/http';
 import { expect } from 'chai';
 import { startServer, closeServer } from './server/server';
 import 'isomorphic-fetch';
-import { IErrorResponse, IResponse } from '../src/contracts/IResponse';
+import { IErrorResponse } from '../src/contracts/IResponse';
+import { CancelToken } from '../src/contracts/IRequest';
 
 function run(Http: new (config?: IHttpConfig) => IHttp, port: number) {
     return new Promise((resolve) => {
@@ -126,6 +127,31 @@ function run(Http: new (config?: IHttpConfig) => IHttp, port: number) {
                 if (error && error.response) {
                     expect(error.code).to.equal(400);
                     expect(error.response.data).to.equal('error');
+                }
+            });
+
+            it('can create a cancel token and then cancel a request', (done) => {
+                const http = new Http();
+                let cancel: CancelToken = (message?: string) => {};
+
+                const promise = http.get({
+                    url: `${baseURL}/cancel`,
+                    cancelToken: (c) => {
+                        cancel = c;
+                    },
+                });
+
+                promise.then(() => {
+                        done(new Error('The promise succeeded, this should be canceled.'));
+                    }).catch((error: IErrorResponse) => {
+                        expect(error.code).to.be.undefined;
+                        done();
+                    });
+
+                if (cancel !== null) {
+                    cancel();
+                } else {
+                    done(new Error('The cancel token wasn\'t generated.'));
                 }
             });
 

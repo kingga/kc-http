@@ -1,5 +1,5 @@
 import { IHttp, IHttpConfig } from './contracts/IHttp';
-import { IRequest } from './contracts/IRequest';
+import { IRequest, CancelToken } from './contracts/IRequest';
 import { IResponse, IErrorResponse } from './contracts/IResponse';
 import { runResponseMiddleware } from './functions/middleware';
 
@@ -18,6 +18,14 @@ export default class FetchHttp implements IHttp {
                 headers: request.headers,
                 body,
             };
+
+            if (request.cancelToken) {
+                const controller = new AbortController();
+                config.signal = controller.signal;
+
+                const cancel: CancelToken = (): void => controller.abort();
+                request.cancelToken(cancel);
+            }
 
             fetch(request.url, config)
                 .then((response) => {
