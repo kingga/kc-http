@@ -1,10 +1,14 @@
-import { ResponseMiddleware, RequestMiddleware } from '../types';
+import { RequestMiddleware, ResponseMiddleware } from '../types';
 import { IRequest } from './IRequest';
 import { IResponse } from './IResponse';
 
+interface Headers {
+    [key: string]: string;
+}
+
 export interface IHttpConfig {
     baseURL?: string;
-    headers?: Object;
+    headers?: Headers;
     data?: any;
     responseMiddleware?: ResponseMiddleware[];
     requestMiddleware?: RequestMiddleware[];
@@ -17,4 +21,6 @@ export interface IHttp {
     put(request: IRequest): Promise<IResponse>;
     patch(request: IRequest): Promise<IResponse>;
     delete(request: IRequest): Promise<IResponse>;
+    getConfig(): IHttpConfig;
+    setHeader(header: string, value: any): IHttp;
 }
