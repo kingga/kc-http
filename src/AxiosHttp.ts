@@ -1,12 +1,13 @@
-import Axios, { AxiosInstance, AxiosResponse, AxiosError, AxiosRequestConfig } from 'axios';
-import { IRequest } from './contracts/IRequest';
-import { IResponse, IErrorResponse } from './contracts/IResponse';
+import Axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+
 import { IHttp, IHttpConfig } from './contracts/IHttp';
+import { IRequest } from './contracts/IRequest';
+import { IErrorResponse, IResponse } from './contracts/IResponse';
 import { runResponseMiddleware } from './functions/middleware';
 
 export default class AxiosHttp implements IHttp {
     protected axios: AxiosInstance;
-    protected config: IHttpConfig
+    protected config: IHttpConfig;
 
     constructor(config?: IHttpConfig) {
         this.config = config || {};
@@ -71,6 +72,20 @@ export default class AxiosHttp implements IHttp {
         request.method = 'DELETE';
 
         return this.request(request);
+    }
+
+    public getConfig(): IHttpConfig {
+        return this.config;
+    }
+
+    public setHeader(header: string, value: any): IHttp {
+        if (!this.config.headers) {
+            this.config.headers = {};
+        }
+
+        this.config.headers[header] = value;
+
+        return this;
     }
 
     protected formatAxiosResponse(response: AxiosResponse, request: IRequest): IResponse {
