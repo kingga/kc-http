@@ -1,7 +1,7 @@
-import { AxiosInstance, AxiosResponse, AxiosError } from 'axios';
-import { IRequest } from './contracts/IRequest';
-import { IResponse, IErrorResponse } from './contracts/IResponse';
+import { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 import { IHttp, IHttpConfig } from './contracts/IHttp';
+import { IRequest } from './contracts/IRequest';
+import { IErrorResponse, IResponse } from './contracts/IResponse';
 export default class AxiosHttp implements IHttp {
     protected axios: AxiosInstance;
     protected config: IHttpConfig;
@@ -12,6 +12,8 @@ export default class AxiosHttp implements IHttp {
     put(request: IRequest): Promise<IResponse>;
     patch(request: IRequest): Promise<IResponse>;
     delete(request: IRequest): Promise<IResponse>;
+    getConfig(): IHttpConfig;
+    setHeader(header: string, value: any): IHttp;
     protected formatAxiosResponse(response: AxiosResponse, request: IRequest): IResponse;
     protected formatAxiosError(error: AxiosError, request: IRequest): IErrorResponse;
 }

@@ -1,6 +1,6 @@
 import { IHttp, IHttpConfig } from './contracts/IHttp';
 import { IRequest } from './contracts/IRequest';
-import { IResponse, IErrorResponse } from './contracts/IResponse';
+import { IErrorResponse, IResponse } from './contracts/IResponse';
 export default class FetchHttp implements IHttp {
     protected config: IHttpConfig;
     constructor(config?: IHttpConfig);
@@ -10,6 +10,8 @@ export default class FetchHttp implements IHttp {
     put(request: IRequest): Promise<IResponse>;
     patch(request: IRequest): Promise<IResponse>;
     delete(request: IRequest): Promise<IResponse>;
+    getConfig(): IHttpConfig;
+    setHeader(header: string, value: any): IHttp;
     protected parseFetchResponse(response: Response): Promise<string | any>;
     protected getResponseObject(data: any, response: Response, request: IRequest): IResponse;
     protected formatFetchResponse(response: Response, request: IRequest): Promise<IResponse>;
