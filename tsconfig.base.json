@@ -8,6 +8,7 @@
         "sourceMap": true,
         "removeComments": true,
         "outDir": "./dist/",
+        "moduleResolution": "Node",
 
         /* Strict Type-Checking Options */
         "strict": true,
@@ -15,5 +16,12 @@
 
         /* Source Map Options */
         "inlineSourceMap": false               /* Emit a single file with source maps instead of having a separate file. */
-    }
+    },
+    "include": [
+        "src/**/*"
+    ],
+    "exclude": [
+        "node_modules/**/*",
+        "tests/**/*"
+    ]
 }

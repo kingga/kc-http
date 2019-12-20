@@ -1,6 +1,6 @@
-import { Server } from 'http';
+import * as bodyParser from 'body-parser';
 import * as express from 'express';
-import bodyParser = require('body-parser');
+import { Server } from 'http';
 
 const app = express();
 let servers: Server[] = [];

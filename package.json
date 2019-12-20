@@ -1,8 +1,8 @@
 {
     "name": "@kingga/kc-http",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "An HTTP strategy which allows you to switch between multiple HTTP libraries such as Axios, Fetch, etc. without changing any code.",
-    "main": "dist/index.js",
+    "main": "dist/http.js",
     "types": "dist/src/http.d.ts",
     "repository": "https://github.com/kingga/kc-http",
     "author": "Isaac Skelton <contact@isaacskelton.com>",
@@ -16,7 +16,6 @@
         "TypeScript"
     ],
     "devDependencies": {
-        "@types/axios": "^0.14.0",
         "@types/chai": "^4.2.5",
         "@types/express": "^4.17.2",
         "@types/isomorphic-fetch": "^0.0.35",
@@ -38,9 +37,7 @@
     },
     "scripts": {
         "test": "nyc mocha 'tests/**/*.ts' --require ts-node/register",
-        "dev": "webpack --mode development",
-        "watch": "webpack --mode development --watch",
-        "production": "webpack --mode production",
+        "production": "tsc -p tsconfig.build.json",
         "server": "tsc tests/server/index.ts --outDir tests/server/dist && node tests/server/dist/index.js",
         "prepublish": "yarn test && yarn production"
     },
