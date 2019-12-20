@@ -1,6 +1,6 @@
 {
     "name": "@kingga/kc-http",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "An HTTP strategy which allows you to switch between multiple HTTP libraries such as Axios, Fetch, etc. without changing any code.",
     "main": "dist/http.js",
     "types": "dist/http.d.ts",
