@@ -1,6 +1,6 @@
 import { IHttp, IHttpConfig } from './contracts/IHttp';
-import { IRequest, CancelToken } from './contracts/IRequest';
-import { IResponse, IErrorResponse } from './contracts/IResponse';
+import { CancelToken, IRequest } from './contracts/IRequest';
+import { IErrorResponse, IResponse } from './contracts/IResponse';
 import { runResponseMiddleware } from './functions/middleware';
 
 export default class FetchHttp implements IHttp {
@@ -77,7 +77,21 @@ export default class FetchHttp implements IHttp {
         return this.request(request);
     }
 
-    protected parseFetchResponse(response: Response): Promise<string|any> {
+    public getConfig(): IHttpConfig {
+        return this.config;
+    }
+
+    public setHeader(header: string, value: any): IHttp {
+        if (!this.config.headers) {
+            this.config.headers = {};
+        }
+
+        this.config.headers[header] = value;
+
+        return this;
+    }
+
+    protected parseFetchResponse(response: Response): Promise<string | any> {
         return new Promise((resolve) => {
             response.text().then((text) => {
                 // Try to parse it into an object.
