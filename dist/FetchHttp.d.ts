@@ -12,7 +12,7 @@ export default class FetchHttp implements IHttp {
     delete(request: IRequest): Promise<IResponse>;
     getConfig(): IHttpConfig;
     setHeader(header: string, value: any): IHttp;
-    protected parseFetchResponse(response: Response): Promise<string | any>;
+    protected parseFetchResponse(response: Response | Error): Promise<string | any>;
     protected getResponseObject(data: any, response: Response, request: IRequest): IResponse;
     protected formatFetchResponse(response: Response, request: IRequest): Promise<IResponse>;
     protected formatFetchError(error: Response, request: IRequest): Promise<IErrorResponse>;

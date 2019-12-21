@@ -22,7 +22,7 @@ export default class AxiosHttp {
             }
             this.axios.request(config)
                 .then((response) => {
-                runResponseMiddleware(this.formatAxiosResponse(response, request), resolve, reject, this.config.responseMiddleware || []);
+                runResponseMiddleware(this.formatAxiosResponse(response, request), resolve, reject, [...(this.config.responseMiddleware || [])]);
             })
                 .catch((error) => reject(this.formatAxiosError(error, request)));
         });

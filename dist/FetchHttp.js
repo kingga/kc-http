@@ -33,7 +33,7 @@ export default class FetchHttp {
                 }
                 this.formatFetchResponse(response, request)
                     .then((response) => {
-                    runResponseMiddleware(response, resolve, reject, this.config.responseMiddleware || []);
+                    runResponseMiddleware(response, resolve, reject, [...(this.config.responseMiddleware || [])]);
                 });
             })
                 .catch((error) => __awaiter(this, void 0, void 0, function* () { return reject(yield this.formatFetchError(error, request)); }));
@@ -70,7 +70,10 @@ export default class FetchHttp {
         return this;
     }
     parseFetchResponse(response) {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
+            if (response instanceof Error) {
+                return resolve(response.message);
+            }
             response.text().then((text) => {
                 let data;
                 try {
@@ -125,7 +128,7 @@ export default class FetchHttp {
     }
     castHeadersToRecord(headers) {
         const record = {};
-        headers.forEach((v, k) => record[k] = v);
+        (headers || []).forEach((v, k) => record[k] = v);
         return record;
     }
 }
