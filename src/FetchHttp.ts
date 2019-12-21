@@ -39,7 +39,7 @@ export default class FetchHttp implements IHttp {
                                 response,
                                 resolve,
                                 reject,
-                                this.config.responseMiddleware || []
+                                [...(this.config.responseMiddleware || [])]
                             );
                         });
                 })
@@ -91,8 +91,12 @@ export default class FetchHttp implements IHttp {
         return this;
     }
 
-    protected parseFetchResponse(response: Response): Promise<string | any> {
-        return new Promise((resolve) => {
+    protected parseFetchResponse(response: Response | Error): Promise<string | any> {
+        return new Promise((resolve, reject) => {
+            if (response instanceof Error) {
+                return resolve(response.message);
+            }
+
             response.text().then((text) => {
                 // Try to parse it into an object.
                 let data: any;
@@ -160,7 +164,7 @@ export default class FetchHttp implements IHttp {
 
     protected castHeadersToRecord(headers: Headers): Record<string, string> {
         const record: Record<string, string> = {};
-        headers.forEach((v, k) => record[k] = v);
+        (headers || []).forEach((v, k) => record[k] = v);
 
         return record;
     }

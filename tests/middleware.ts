@@ -1,7 +1,10 @@
-import { runResponseMiddleware } from '../src/functions/middleware';
-import { IResponse } from '../src/contracts/IResponse';
 import { expect } from 'chai';
+
+import { IResponse } from '../src/contracts/IResponse';
+import { runResponseMiddleware } from '../src/functions/middleware';
+import { AxiosHttp, FetchHttp } from '../src/http';
 import { createResponse } from './helpers';
+import { closeServer, startServer } from './server/server';
 
 describe('Middleware', () => {
     it('should be able to run through multiple middleware.', async () => {
@@ -60,4 +63,33 @@ describe('Middleware', () => {
 
         expect(e).to.equal(error);
     });
+
+    it('can run the middleware more than once', async () => {
+        await startServer(13339);
+        const baseURL = 'http://localhost:13339';
+        const config = {
+            responseMiddleware: [
+                async (response) => {
+                    response.data.throughMiddleware = true;
+
+                    return response;
+                },
+            ],
+        };
+
+        const fetch = new FetchHttp(config);
+        const axios = new AxiosHttp(config);
+
+        const r1 = await fetch.get({ url: `${baseURL}/json` });
+        const r2 = await fetch.get({ url: `${baseURL}/json` });
+        const r3 = await axios.get({ url: `${baseURL}/json` });
+        const r4 = await axios.get({ url: `${baseURL}/json` });
+
+        expect(r1.data.throughMiddleware).to.be.true;
+        expect(r2.data.throughMiddleware).to.be.true;
+        expect(r3.data.throughMiddleware).to.be.true;
+        expect(r4.data.throughMiddleware).to.be.true;
+
+        await closeServer(13339);
+    }).timeout(10000);
 });

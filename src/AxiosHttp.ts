@@ -37,7 +37,7 @@ export default class AxiosHttp implements IHttp {
                         this.formatAxiosResponse(response, request),
                         resolve,
                         reject,
-                        this.config.responseMiddleware || []
+                        [...(this.config.responseMiddleware || [])]
                     );
                 })
                 .catch((error: AxiosError) => reject(this.formatAxiosError(error, request)));
