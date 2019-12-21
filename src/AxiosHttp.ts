@@ -24,7 +24,7 @@ export default class AxiosHttp implements IHttp {
                 url: request.url,
                 method: request.method || 'GET',
                 data: request.body || undefined,
-                headers: request.headers || {},
+                headers: Object.assign({}, request.headers || {}, this.config.headers || {}),
             };
 
             if (request.cancelToken) {

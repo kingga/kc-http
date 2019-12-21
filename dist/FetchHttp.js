@@ -17,7 +17,7 @@ export default class FetchHttp {
             const body = this.createBody(request);
             const config = {
                 method: request.method,
-                headers: request.headers,
+                headers: Object.assign({}, request.headers, this.config.headers || {}),
                 body,
             };
             if (request.cancelToken) {

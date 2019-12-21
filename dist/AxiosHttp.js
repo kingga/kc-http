@@ -15,7 +15,7 @@ export default class AxiosHttp {
                 url: request.url,
                 method: request.method || 'GET',
                 data: request.body || undefined,
-                headers: request.headers || {},
+                headers: Object.assign({}, request.headers || {}, this.config.headers || {}),
             };
             if (request.cancelToken) {
                 config.cancelToken = new Axios.CancelToken(request.cancelToken);

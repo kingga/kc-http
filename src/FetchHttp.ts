@@ -15,7 +15,7 @@ export default class FetchHttp implements IHttp {
             const body = this.createBody(request);
             const config: RequestInit = {
                 method: request.method,
-                headers: request.headers,
+                headers: Object.assign({}, request.headers, this.config.headers || {}),
                 body,
             };
 
