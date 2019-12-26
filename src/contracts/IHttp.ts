@@ -23,4 +23,6 @@ export interface IHttp {
     delete(request: IRequest): Promise<IResponse>;
     getConfig(): IHttpConfig;
     setHeader(header: string, value: any): IHttp;
+    addResponseMiddleware(middleware: ResponseMiddleware): IHttp;
+    addRequestMiddleware(middleware: RequestMiddleware): IHttp;
 }

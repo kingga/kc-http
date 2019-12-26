@@ -2,7 +2,7 @@ import { expect } from 'chai';
 
 import { IResponse } from '../src/contracts/IResponse';
 import { runResponseMiddleware } from '../src/functions/middleware';
-import { AxiosHttp, FetchHttp } from '../src/http';
+import { AxiosHttp, FetchHttp, IRequest } from '../src/http';
 import { createResponse } from './helpers';
 import { closeServer, startServer } from './server/server';
 
@@ -92,4 +92,42 @@ describe('Middleware', () => {
 
         await closeServer(13339);
     }).timeout(10000);
+
+    it('can add some custom response middleware after creation', () => {
+        const fetch = new FetchHttp();
+        const axios = new AxiosHttp();
+
+        const middleware = async (response: IResponse) => {
+            response.data.marked = true;
+
+            return response;
+        };
+
+        fetch.addResponseMiddleware(middleware);
+        axios.addResponseMiddleware(middleware);
+
+        expect(fetch.getConfig().responseMiddleware).to.have.lengthOf(1);
+        expect(axios.getConfig().responseMiddleware).to.have.lengthOf(1);
+        expect(fetch.getConfig().responseMiddleware[0]).to.deep.equal(middleware);
+        expect(axios.getConfig().responseMiddleware[0]).to.deep.equal(middleware);
+    });
+
+    it('can add some custom response middleware after creation', () => {
+        const fetch = new FetchHttp();
+        const axios = new AxiosHttp();
+
+        const middleware = async (request: IRequest) => {
+            request.body.marked = true;
+
+            return request;
+        };
+
+        fetch.addRequestMiddleware(middleware);
+        axios.addRequestMiddleware(middleware);
+
+        expect(fetch.getConfig().requestMiddleware).to.have.lengthOf(1);
+        expect(axios.getConfig().requestMiddleware).to.have.lengthOf(1);
+        expect(fetch.getConfig().requestMiddleware[0]).to.deep.equal(middleware);
+        expect(axios.getConfig().requestMiddleware[0]).to.deep.equal(middleware);
+    });
 });

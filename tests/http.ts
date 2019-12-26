@@ -1,10 +1,12 @@
-import { IHttp, IHttpConfig } from '../src/contracts/IHttp';
-import { FetchHttp, AxiosHttp } from '../src/http';
-import { expect } from 'chai';
-import { startServer, closeServer } from './server/server';
 import 'isomorphic-fetch';
-import { IErrorResponse } from '../src/contracts/IResponse';
+
+import { expect } from 'chai';
+
+import { IHttp, IHttpConfig } from '../src/contracts/IHttp';
 import { CancelToken } from '../src/contracts/IRequest';
+import { IErrorResponse } from '../src/contracts/IResponse';
+import { AxiosHttp, FetchHttp } from '../src/http';
+import { closeServer, startServer } from './server/server';
 
 function run(Http: new (config?: IHttpConfig) => IHttp, port: number) {
     return new Promise((resolve) => {
@@ -79,7 +81,7 @@ function run(Http: new (config?: IHttpConfig) => IHttp, port: number) {
 
             it('can catch a 404 error and format it into the IErrorResponse format.', async () => {
                 const http = new Http();
-                let error: IErrorResponse|null = null;
+                let error: IErrorResponse | null = null;
 
                 try {
                     await http.get({ url: `${baseURL}/404` });
@@ -115,7 +117,7 @@ function run(Http: new (config?: IHttpConfig) => IHttp, port: number) {
 
             it('can get an error response which is a plain string.', async () => {
                 const http = new Http();
-                let error: IErrorResponse|null = null;
+                let error: IErrorResponse | null = null;
 
                 try {
                     await http.get({ url: `${baseURL}/string/error` });
@@ -132,7 +134,7 @@ function run(Http: new (config?: IHttpConfig) => IHttp, port: number) {
 
             it('can create a cancel token and then cancel a request', (done) => {
                 const http = new Http();
-                let cancel: CancelToken = (message?: string) => {};
+                let cancel: CancelToken = (message?: string) => { };
 
                 const promise = http.get({
                     url: `${baseURL}/cancel`,
@@ -142,11 +144,11 @@ function run(Http: new (config?: IHttpConfig) => IHttp, port: number) {
                 });
 
                 promise.then(() => {
-                        done(new Error('The promise succeeded, this should be canceled.'));
-                    }).catch((error: IErrorResponse) => {
-                        expect(error.code).to.be.undefined;
-                        done();
-                    });
+                    done(new Error('The promise succeeded, this should be canceled.'));
+                }).catch((error: IErrorResponse) => {
+                    expect(error.code).to.be.undefined;
+                    done();
+                });
 
                 if (cancel !== null) {
                     cancel();

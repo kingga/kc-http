@@ -2,6 +2,7 @@ import { IHttp, IHttpConfig } from './contracts/IHttp';
 import { CancelToken, IRequest } from './contracts/IRequest';
 import { IErrorResponse, IResponse } from './contracts/IResponse';
 import { runResponseMiddleware } from './functions/middleware';
+import { RequestMiddleware, ResponseMiddleware } from './types';
 
 export default class FetchHttp implements IHttp {
     protected config: IHttpConfig;
@@ -87,6 +88,26 @@ export default class FetchHttp implements IHttp {
         }
 
         this.config.headers[header] = value;
+
+        return this;
+    }
+
+    public addResponseMiddleware(middleware: ResponseMiddleware): IHttp {
+        if (!this.config.responseMiddleware) {
+            this.config.responseMiddleware = [];
+        }
+
+        this.config.responseMiddleware.push(middleware);
+
+        return this;
+    }
+
+    public addRequestMiddleware(middleware: RequestMiddleware): IHttp {
+        if (!this.config.requestMiddleware) {
+            this.config.requestMiddleware = [];
+        }
+
+        this.config.requestMiddleware.push(middleware);
 
         return this;
     }
