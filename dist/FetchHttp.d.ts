@@ -1,6 +1,7 @@
 import { IHttp, IHttpConfig } from './contracts/IHttp';
 import { IRequest } from './contracts/IRequest';
 import { IErrorResponse, IResponse } from './contracts/IResponse';
+import { RequestMiddleware, ResponseMiddleware } from './types';
 export default class FetchHttp implements IHttp {
     protected config: IHttpConfig;
     constructor(config?: IHttpConfig);
@@ -12,6 +13,8 @@ export default class FetchHttp implements IHttp {
     delete(request: IRequest): Promise<IResponse>;
     getConfig(): IHttpConfig;
     setHeader(header: string, value: any): IHttp;
+    addResponseMiddleware(middleware: ResponseMiddleware): IHttp;
+    addRequestMiddleware(middleware: RequestMiddleware): IHttp;
     protected parseFetchResponse(response: Response | Error): Promise<string | any>;
     protected getResponseObject(data: any, response: Response, request: IRequest): IResponse;
     protected formatFetchResponse(response: Response, request: IRequest): Promise<IResponse>;

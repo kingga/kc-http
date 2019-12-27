@@ -2,6 +2,7 @@ import { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 import { IHttp, IHttpConfig } from './contracts/IHttp';
 import { IRequest } from './contracts/IRequest';
 import { IErrorResponse, IResponse } from './contracts/IResponse';
+import { RequestMiddleware, ResponseMiddleware } from './types';
 export default class AxiosHttp implements IHttp {
     protected axios: AxiosInstance;
     protected config: IHttpConfig;
@@ -14,6 +15,8 @@ export default class AxiosHttp implements IHttp {
     delete(request: IRequest): Promise<IResponse>;
     getConfig(): IHttpConfig;
     setHeader(header: string, value: any): IHttp;
+    addResponseMiddleware(middleware: ResponseMiddleware): IHttp;
+    addRequestMiddleware(middleware: RequestMiddleware): IHttp;
     protected formatAxiosResponse(response: AxiosResponse, request: IRequest): IResponse;
     protected formatAxiosError(error: AxiosError, request: IRequest): IErrorResponse;
 }

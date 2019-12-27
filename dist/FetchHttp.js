@@ -69,6 +69,20 @@ export default class FetchHttp {
         this.config.headers[header] = value;
         return this;
     }
+    addResponseMiddleware(middleware) {
+        if (!this.config.responseMiddleware) {
+            this.config.responseMiddleware = [];
+        }
+        this.config.responseMiddleware.push(middleware);
+        return this;
+    }
+    addRequestMiddleware(middleware) {
+        if (!this.config.requestMiddleware) {
+            this.config.requestMiddleware = [];
+        }
+        this.config.requestMiddleware.push(middleware);
+        return this;
+    }
     parseFetchResponse(response) {
         return new Promise((resolve, reject) => {
             if (response instanceof Error) {

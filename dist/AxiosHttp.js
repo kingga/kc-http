@@ -57,6 +57,20 @@ export default class AxiosHttp {
         this.config.headers[header] = value;
         return this;
     }
+    addResponseMiddleware(middleware) {
+        if (!this.config.responseMiddleware) {
+            this.config.responseMiddleware = [];
+        }
+        this.config.responseMiddleware.push(middleware);
+        return this;
+    }
+    addRequestMiddleware(middleware) {
+        if (!this.config.requestMiddleware) {
+            this.config.requestMiddleware = [];
+        }
+        this.config.requestMiddleware.push(middleware);
+        return this;
+    }
     formatAxiosResponse(response, request) {
         return {
             data: response.data,
